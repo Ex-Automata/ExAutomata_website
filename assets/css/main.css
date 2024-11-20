@@ -3951,6 +3951,12 @@ input, select, textarea {
 				width: 12em;
 			}
 
+			.wrapper.spotlight.square .image{
+				margin: -1.5em -1.5em 2em -1.5em !important;
+				width: calc(100% + 3em);
+				max-width:  calc(100% + 3em);
+			}
+
 		}
 
 		@media screen and (max-width: 360px) {
@@ -3961,8 +3967,7 @@ input, select, textarea {
 
 		}
 
-		/* Features */
-
+/* Features */
 
 	.features {
 		display: -moz-flex;
