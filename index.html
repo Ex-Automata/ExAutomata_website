@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Under Construction</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background: #f4f4f4;
+            font-family: Arial, sans-serif;
+        }
+        .gear {
+            width: 100px;
+            height: 100px;
+            margin-bottom: 30px;
+            animation: spin 2s linear infinite;
+        }
+        @keyframes spin {
+            100% { transform: rotate(360deg); }
+        }
+        .text {
+            font-size: 2rem;
+            color: #333;
+            letter-spacing: 2px;
+        }
+        @keyframes hammer-hit {
+            0% { transform: rotate(60deg) translateY(-70px); }
+            10% { transform: rotate(60deg) translateY(-70px); }
+            20% { transform: rotate(-30deg) translateY(0); }
+            30% { transform: rotate(60deg) translateY(-70px); }
+            100% { transform: rotate(60deg) translateY(-70px); }
+        }
+    </style>
+</head>
+<body>
+    <div style="position: relative; width: 120px; height: 120px; margin-bottom: 30px;">
+        <span style="position: absolute; left: 10px; top: 30px; font-size: 96px; z-index: 1; animation: spin 2s linear infinite;">⚙️</span>
+        <span id="hammer-emoji" style="position: absolute; left: 50px; bottom: 100; font-size: 96px; z-index: 2; transform: rotate(-30deg); animation: hammer-hit 1.2s infinite;">🔨</span>
+    </div>
+    <div class="text">Under Construction</div>
+</body>
+</html>
