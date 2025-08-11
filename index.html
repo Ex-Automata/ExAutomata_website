@@ -116,17 +116,17 @@
   </style>
   <script>
     const palettes = {
-      'Safety Orange': ['#ff6600', '#5b8aff', '#3ddc97'],
-      'Ocean': ['#1da1f2', '#142c46', '#00c2ff'],
-      'Forest': ['#41b34d', '#0f2e1f', '#a4de02'],
-      'Mauve': ['#9b5de5', '#222033', '#00bbf9'],
-      'Monochrome': ['#8a8f98', '#1a1a1a', '#b5b8bf']
+      'Safety First': { primary: '#ff6600', secondary: '#5b8aff', accent: '#3ddc97' },
+      'Ocean':        { primary: '#1da1f2', secondary: '#142c46', accent: '#00c2ff' },
+      'Forest':       { primary: '#41b34d', secondary: '#0f2e1f', accent: '#a4de02' },
+      'Mauve':        { primary: '#9b5de5', secondary: '#222033', accent: '#00bbf9' },
+      'Monochrome':   { primary: '#8a8f98', secondary: '#1a1a1a', accent: '#b5b8bf' }
     };
     function setPalette(name){
-      const [primary, secondary, accent] = palettes[name];
-      document.documentElement.style.setProperty('--primary', primary);
-      document.documentElement.style.setProperty('--secondary', secondary);
-      document.documentElement.style.setProperty('--accent', accent);
+      const palette = palettes[name];
+      document.documentElement.style.setProperty('--primary', palette["primary"]);
+      document.documentElement.style.setProperty('--secondary', palette["secondary"]);
+      document.documentElement.style.setProperty('--accent', palette["accent"]);
     }
     function setTheme(mode){
       if(mode==='light') document.documentElement.setAttribute('data-theme','light');
@@ -152,7 +152,7 @@
         <a href="#contact">Contact</a>
         <div class="theme-switch">
           <select onchange="setPalette(this.value)">
-            <option>Safety Orange</option>
+            <option>Safety First</option>
             <option>Ocean</option>
             <option>Forest</option>
             <option>Mauve</option>
