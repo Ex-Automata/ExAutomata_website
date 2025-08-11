@@ -3,24 +3,38 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="color-scheme" content="dark light">
   <title>Peter Pollak e.U. – AI Automation & Consulting</title>
   <style>
     /* ========= THEME ========= */
-    :root {
-      --bg: #0b0c0f;           /* dark by default (modern look) */
+    :root{
+      --bg: #0b0c0f;
       --panel: #0f1116;
       --card: #141720;
       --text: #e7eaf3;
       --muted: #9aa3b2;
+      --shadow: 0 10px 30px rgba(0,0,0,.35);
       --primary: #ff6600;      /* Safety Orange */
       --secondary: #5b8aff;    /* Indigo */
       --accent: #3ddc97;       /* Mint */
       --ring: 0 0 0 1px rgba(255,255,255,.08), 0 0 0 4px color-mix(in srgb, var(--primary) 20%, transparent);
       --radius: 14px;
-      --shadow: 0 10px 30px rgba(0,0,0,.35);
       font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, "Noto Sans", Arial, sans-serif;
     }
-    [data-theme="light"] {
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #0b0c0f;
+        --panel: #0f1116;
+        --card: #141720;
+        --text: #e7eaf3;
+        --muted: #9aa3b2;
+        --shadow: 0 10px 30px rgba(0,0,0,.35);
+      }
+    }
+    
+    @media (prefers-color-scheme: light) {
+      :root {
       --bg: #f7f8fb;
       --panel: #ffffff;
       --card: #ffffff;
@@ -28,6 +42,8 @@
       --muted: #556070;
       --shadow: 0 8px 24px rgba(0,0,0,.08);
     }
+    }
+
 
     /* ========= BASICS ========= */
     * { box-sizing: border-box; }
