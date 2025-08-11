@@ -1,371 +1,393 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ex Automata</title>
-    <style>
-        html, body {
-            margin: 0;
-            padding: 0;
-            height: 100%;
-            width: 100%;
-            font-family: 'Segoe UI', Arial, sans-serif;
-            background: linear-gradient(120deg, #e0e7ef 50%, #c7eaff 100%);
-            color: #23272e;
-            overflow-x: hidden;
-        }
-        #bg-canvas {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100vw;
-            height: 100vh;
-            z-index: 0;
-            pointer-events: none;
-        }
-        .content {
-            position: relative;
-            z-index: 1;
-            padding-top: 60px;
-        }
-        header {
-            text-align: center;
-            padding: 2rem 0 1rem 0;
-            font-size: 2.5rem;
-            font-weight: bold;
-            letter-spacing: 0.1em;
-        }
-        .panels {
-            display: flex;
-            justify-content: center;
-            gap: 2rem;
-            margin: 3rem 0 2rem 0;
-            flex-wrap: wrap;
-        }
-        .panel {
-            background: rgba(255, 255, 255, 0.85);
-            border-radius: 1.2rem;
-            box-shadow: 0 4px 24px #b0d0ff88;
-            padding: 0;
-            min-width: 380px;
-            min-height: 400px;
-            height: 100%;
-            width: 80%;
-            display: block;
-            position: relative;
-            overflow: hidden;
-            text-align: left;
-            transition: transform 0.2s, box-shadow 0.2s;
-            cursor: pointer;
-            font-size: 1.15rem;
-            color: #23272e;
-        }
-        .panel-content {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 75%;
-            height: 100%;
-            z-index: 2;
-            padding: 2rem 1.5rem 2rem 2rem;
-            flex-direction: column;
-            justify-content: center;
-            pointer-events: auto;
-            text-align: justify;
-            text-align-last: left;
-        }
-        .panel-image {
-            position: absolute;
-            top: 0;
-            right: 0;
-            width: 220px;
-            height: 100%;
-            z-index: 1;
-            overflow: hidden;
-            display: flex;
-            align-items: center;
-            background: linear-gradient(to left, #e0e7ef 60%, transparent 100%);
-            pointer-events: none;
-        }
-        .panel-image img {
-            position: absolute;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-            opacity: 0;
-            transition: opacity 0.5s;
-            pointer-events: none;
-            -webkit-mask-image:-webkit-gradient(linear, right top, left top, from(rgba(0,0,0,1)), to(rgba(0,0,0,0)));
-            mask-image: linear-gradient(to left, rgba(0,0,0,1), rgba(0,0,0,0));
-        }
-        .panel-image img.active {
-            opacity: 1;
-        }
-        .panel .learn-more {
-            margin-top: 1.2rem;
-            padding: 0.6rem 1.3rem;
-            background: #00bfff;
-            color: #fff;
-            max-width: 200px;
-            border: none;
-            border-radius: 0.7rem;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            box-shadow: 0 2px 8px #b0d0ff44;
-            transition: background 0.2s;
-        }
-        .panel .learn-more:hover {
-            background: #0099cc;
-        }
-        .about-panel {
-            background: rgba(255,255,255,0.85);
-            border-radius: 1.2rem;
-            box-shadow: 0 4px 24px #b0d0ff88;
-            width: 90%;
-            height: 220px;
-            margin: 0 auto 2rem auto;
-            display: block;
-            position: relative;
-        }
-        .about-panel .panel-content {
-            position: absolute;
-            top: 0;
-            left: 0;
-            z-index: 2;
-            padding: 2rem 1.5rem 2rem 2rem;
-        }
-        .about-panel .panel-image {
-            position: absolute;
-            top: 0;
-            right: 0;
-            width: 220px;
-            height: 100%;
-            z-index: 1;
-            background: linear-gradient(to left, #e0e7ef 60%, transparent 100%);
-        }
-        @media (max-width: 700px) {
-            .panels {
-                flex-direction: column;
-                align-items: center;
-            }
-            .panel, .about-panel {
-                width: 95vw;
-                min-width: unset;
-                max-width: 98vw;
-            }
-            .panel-image, .about-panel .panel-image {
-                width: 120px;
-            }
-        }
-        footer {
-            text-align: center;
-            padding: 1.5rem 0 1rem 0;
-            font-size: 1rem;
-            color: #5a6a7a;
-            background: #e0e7ef;
-            border-top: 1px solid #b0d0ff;
-            margin-top: 3rem;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Peter Pollak e.U. – AI Automation & Consulting</title>
+  <style>
+    /* ========= THEME ========= */
+    :root {
+      --bg: #0b0c0f;           /* dark by default (modern look) */
+      --panel: #0f1116;
+      --card: #141720;
+      --text: #e7eaf3;
+      --muted: #9aa3b2;
+      --primary: #ff6600;      /* Safety Orange */
+      --secondary: #5b8aff;    /* Indigo */
+      --accent: #3ddc97;       /* Mint */
+      --ring: 0 0 0 1px rgba(255,255,255,.08), 0 0 0 4px color-mix(in srgb, var(--primary) 20%, transparent);
+      --radius: 14px;
+      --shadow: 0 10px 30px rgba(0,0,0,.35);
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, "Noto Sans", Arial, sans-serif;
+    }
+    [data-theme="light"] {
+      --bg: #f7f8fb;
+      --panel: #ffffff;
+      --card: #ffffff;
+      --text: #101218;
+      --muted: #556070;
+      --shadow: 0 8px 24px rgba(0,0,0,.08);
+    }
+
+    /* ========= BASICS ========= */
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body { margin: 0; background: radial-gradient(1200px 800px at 80% -10%, color-mix(in srgb, var(--secondary) 22%, transparent), transparent 60%), var(--bg); color: var(--text); background-attachment: fixed; background-repeat: no-repeat; }
+    a { color: var(--text); text-decoration: none; }
+    .container { max-width: 1120px; margin: 0 auto; padding: 0 1.6rem; }
+    .btn { display:inline-flex; align-items:center; gap:.6rem; padding:.9rem 1.2rem; border-radius: 999px; font-weight:600; border:1px solid color-mix(in srgb, var(--text) 12%, transparent); backdrop-filter: saturate(130%) blur(6px); }
+    .btn.primary { background: linear-gradient(135deg, var(--primary), color-mix(in srgb, var(--primary) 60%, #fff 10%)); color:#fff; border: none; box-shadow: var(--shadow); }
+    .btn.ghost { background: transparent; color: var(--text); }
+    .badge { display:inline-flex; align-items:center; gap:.4rem; padding:.35rem .7rem; border-radius:999px; font-size:.85rem; color: var(--text); background: color-mix(in srgb, var(--secondary) 18%, transparent); border:1px solid color-mix(in srgb, var(--text) 12%, transparent); }
+
+    /* ========= BGR FX ========= */
+    @keyframes gradientShift {
+      0% { background-position: 0% 0%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 0%; }
+    }
+    body.anim-gradient {
+      background: radial-gradient(1200px 800px at 80% -10%, color-mix(in srgb, var(--secondary) 22%, transparent), transparent 60%),
+                  radial-gradient(1200px 800px at 20% 110%, color-mix(in srgb, var(--primary) 18%, transparent), transparent 60%),
+                  linear-gradient(120deg, color-mix(in srgb, var(--accent) 16%, transparent), transparent 60%),
+                  var(--bg);
+                  background-attachment: fixed; background-repeat: no-repeat; 
+      background-size: 120% 120%, 120% 120%, 160% 160%, auto;
+      animation: gradientShift 22s ease-in-out infinite;
+    }
+
+    #bgfx { position: fixed; inset: 0; z-index: -1; width: 100%; height: 100%; display:block; }
+
+
+    /* ========= NAV ========= */
+    .nav { position: sticky; top:0; z-index:50; backdrop-filter: blur(8px) saturate(120%); background: color-mix(in srgb, var(--bg) 86%, transparent); border-bottom:1px solid color-mix(in srgb, var(--text) 10%, transparent); }
+    .nav-inner { display:flex; align-items:center; justify-content:space-between; height:64px; }
+    .brand { display:flex; align-items:center; gap:.8rem; font-weight:700; }
+    .logo { width:28px; height:28px; border-radius:7px; background: conic-gradient(from 220deg, var(--primary), var(--secondary), var(--accent), var(--primary)); box-shadow: 0 0 0 1px color-mix(in srgb, var(--text) 18%, transparent) inset; }
+    .nav-links { display:flex; gap:1.2rem; align-items:center; }
+    .theme-switch { display:flex; gap:.6rem; align-items:center; }
+    select, .switch { background: transparent; color: var(--text); border:1px solid color-mix(in srgb, var(--text) 15%, transparent); border-radius:999px; padding:.4rem .7rem; }
+
+    /* ========= HERO ========= */
+    .hero { padding: 72px 0 36px; }
+    .hero-grid { display:grid; grid-template-columns:1.15fr .85fr; gap:3rem; align-items:center; }
+    .hero h1 { font-size: clamp(2.2rem, 3.6vw, 3.2rem); line-height:1.08; margin:.2rem 0 .6rem; }
+    .hero p { font-size: clamp(1rem, 1.4vw, 1.15rem); color: var(--muted); }
+    .blob { aspect-ratio:1/1; width:100%; border-radius: 28px; background: radial-gradient(60% 60% at 30% 30%, color-mix(in srgb, var(--primary) 60%, transparent), transparent 70%), radial-gradient(60% 60% at 70% 70%, color-mix(in srgb, var(--secondary) 55%, transparent), transparent 70%), linear-gradient(160deg, color-mix(in srgb, var(--accent) 55%, transparent), transparent 60%); box-shadow: var(--shadow); transform: rotate(2deg); }
+
+    /* ========= SECTIONS ========= */
+    section { padding: 54px 0; }
+    h2 { font-size: 1.8rem; margin: 0 0 1.2rem; }
+    .lede { color: var(--muted); max-width: 70ch; }
+
+    /* ========= CARDS / GRIDS ========= */
+    .grid { display:grid; gap:1.4rem; grid-template-columns: repeat(12, 1fr); }
+    .card { grid-column: span 4; background: linear-gradient(180deg, color-mix(in srgb, var(--card) 92%, transparent), color-mix(in srgb, var(--card) 96%, transparent)); border:1px solid color-mix(in srgb, var(--text) 10%, transparent); border-radius: var(--radius); padding:1.4rem; box-shadow: var(--shadow); transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease; }
+    .card:hover { transform: translateY(-4px); border-color: color-mix(in srgb, var(--primary) 28%, transparent); }
+    .card h3 { margin:.1rem 0 .4rem; font-size:1.15rem; }
+    .card p { color: var(--muted); }
+
+    /* Keep your 3-box Services */
+    .services .card { grid-column: span 4; }
+
+    /* ========= PROJECTS (tabs) ========= */
+    .tabs { display:flex; gap:.6rem; flex-wrap: wrap; margin: .4rem 0 1rem; }
+    .tab { padding:.5rem .8rem; border-radius: 999px; border:1px solid color-mix(in srgb, var(--text) 14%, transparent); cursor:pointer; background: transparent; color: var(--text); }
+    .tab.active { background: color-mix(in srgb, var(--secondary) 20%, transparent); border-color: color-mix(in srgb, var(--secondary) 35%, transparent); }
+    .panel { display:none; }
+    .panel.active { display:block; }
+    .feature-list { display:grid; gap:.6rem; margin: .8rem 0 0; padding:0; list-style:none; }
+    .feature-list li { display:flex; gap:.6rem; align-items:flex-start; }
+    .tick { width:.95rem; height:.95rem; border-radius:3px; background: var(--accent); margin-top:.2rem; }
+
+    /* ========= INFO STRIP ========= */
+    .strip { display:flex; flex-wrap:wrap; gap:.8rem; align-items:center; padding: .8rem; border-radius: 12px; background: color-mix(in srgb, var(--secondary) 14%, transparent); border:1px solid color-mix(in srgb, var(--text) 12%, transparent); }
+
+    /* ========= FOOTER ========= */
+    footer { border-top:1px solid color-mix(in srgb, var(--text) 10%, transparent); background: var(--panel); padding: 36px 0 60px; color: var(--muted); }
+    footer a { color: var(--text); }
+
+    /* ========= RESPONSIVE ========= */
+    @media (max-width: 920px) {
+      .hero-grid { grid-template-columns:1fr; }
+      .card { grid-column: span 12; }
+      .services .card { grid-column: span 12; }
+    }
+  </style>
+  <script>
+    const palettes = {
+      'Safety Orange': ['#ff6600', '#5b8aff', '#3ddc97'],
+      'Ocean': ['#1da1f2', '#142c46', '#00c2ff'],
+      'Forest': ['#41b34d', '#0f2e1f', '#a4de02'],
+      'Mauve': ['#9b5de5', '#222033', '#00bbf9'],
+      'Monochrome': ['#8a8f98', '#1a1a1a', '#b5b8bf']
+    };
+    function setPalette(name){
+      const [primary, secondary, accent] = palettes[name];
+      document.documentElement.style.setProperty('--primary', primary);
+      document.documentElement.style.setProperty('--secondary', secondary);
+      document.documentElement.style.setProperty('--accent', accent);
+    }
+    function setTheme(mode){
+      if(mode==='light') document.documentElement.setAttribute('data-theme','light');
+      else document.documentElement.removeAttribute('data-theme');
+    }
+    function switchTab(id){
+      document.querySelectorAll('.tab').forEach(t=>t.classList.toggle('active', t.dataset.target===id));
+      document.querySelectorAll('.panel').forEach(p=>p.classList.toggle('active', p.id===id));
+    }
+    document.addEventListener('DOMContentLoaded',()=>{
+      switchTab('paige');
+    });
+  </script>
 </head>
 <body>
-    <canvas id="bg-canvas"></canvas>
-    <div class="content">
-        <header>Ex Automata</header>
-        <section class="panels">
-            <div class="panel" onclick="location.href='paige.html'">
-                <div class="panel-content">
-                    <h2>Paige</h2>
-                    <p>
-                        Paige is a modular, desktop-native assistant designed to work <em>for you</em>.
-                        You're in full control—add your own models, define its personality, and shape its behavior to suit your workflow.
-                    </p>
-                    <p>
-                        Whether you need automation, smart context handling, or seamless integration with your favorite tools,
-                        Paige adapts to your needs. Customize it deeply. Talk to it naturally. Let it handle the grunt work so you can focus on what matters.
-                    </p>
-                    <button class="learn-more" onclick="event.stopPropagation();window.location.href='paige.html'">Learn More</button>
-                </div>
-                <div class="panel-image" id="paige-images">
-                    <img src="img/paige/paige1.png" alt="Paige" class="active"/>
-                    <img src="img/paige/paige2.png" alt="Paige" />
-                </div>
-            </div>
-            <div class="panel" onclick="location.href='nutritracker.html'">
-                <div class="panel-content">
-                    <h2>NutriTracker</h2>
-                    <p>
-                        NutriTracker is an AI-based nutrition tracker that helps you create individualized calorie and nutrition goals, and track your intake effortlessly. 
-                    </p>
-                    <p>
-                        Whether you log a plate, a portion, a scoop, 100 grams, or even just a picture—NutriTracker uses common-sense estimation to make sense of it. 
-                        While not as precise; ease of use is the priority.
-                    </p>
-                    <p>
-                        It estimates not just calories, but also macronutrients like protein, fat, and carbs, as well as micronutrients. 
-                        You can even track your workouts and subtract them from your daily budget automatically.
-                    </p>
-                    <button class="learn-more" onclick="event.stopPropagation();window.location.href='nutritracker.html'">Learn More</button>
-                </div>
-                <div class="panel-image" id="nutri-images">
-                    <img src="img/nutri/nutri1.png" alt="NutriTracker" class="active"/>
-                </div>
-            </div>
-        </section>
-        <section class="about-panel">
-            <div class="panel-content" style="width: 90%">
-                <h2>About Us</h2>
-                <p>
-                    Ex Automata is dedicated to building innovative digital tools that empower users to achieve more. Our products combine cutting-edge AI with intuitive design to help you work, create, and live better.
-                </p>
-            </div>
-        </section>
-        <footer>
-            &copy; 2025 Ex Automata. All rights reserved. | info@exautomata.com
-        </footer>
+  <canvas id="bgfx"></canvas>
+  <div class="nav">
+    <div class="container nav-inner">
+      <div class="brand"><span class="logo"></span><span>Peter Pollak e.U.</span></div>
+      <div class="nav-links">
+        <a href="#services">Services</a>
+        <a href="#projects">Projects</a>
+        <a href="#contact">Contact</a>
+        <div class="theme-switch">
+          <select onchange="setPalette(this.value)">
+            <option>Safety Orange</option>
+            <option>Ocean</option>
+            <option>Forest</option>
+            <option>Mauve</option>
+            <option>Monochrome</option>
+          </select>
+          <select onchange="setTheme(this.value)">
+            <option value="dark">Dark</option>
+            <option value="light">Light</option>
+          </select>
+        </div>
+      </div>
     </div>
-    <script>
-        // Dynamic background: interactive particles
-        const canvas = document.getElementById('bg-canvas');
-        const ctx = canvas.getContext('2d');
-        let width = window.innerWidth;
-        let height = window.innerHeight;
-        let mouse = { x: width/2, y: height/2 };
-        let scrollY = 0;
-        let particles = [];
-        const PARTICLE_COUNT = 60;
+  </div>
 
-        function resize() {
-            width = window.innerWidth;
-            height = window.innerHeight;
-            canvas.width = width;
-            canvas.height = height;
-        }
-        window.addEventListener('resize', resize);
-        resize();
+  <header class="hero">
+    <div class="container hero-grid">
+      <div>
+        <span class="badge">Automation • AI • Infrastructure</span>
+        <h1>No‑nonsense AI automation and infrastructure, built to ship.</h1>
+        <p>Advisory and delivery for agent workflows, RAG, MCP/UTCP integrations, and Kubernetes-backed deployments. English & German. Vienna-based, remote-friendly.</p>
+        <div style="display:flex; gap:.8rem; margin-top:1rem; flex-wrap:wrap;">
+          <a class="btn primary" href="#contact">Let's talk</a>
+          <a class="btn ghost" href="#projects">See projects</a>
+        </div>
+        <div class="strip" style="margin-top:1rem;">
+          <span>Local & cloud models • BYO keys or managed • Modular extensions</span>
+        </div>
+      </div>
+      <div>
+        <div class="blob" aria-hidden="true"></div>
+      </div>
+    </div>
+  </header>
 
-        function randomColor() {
-            const colors = ['#00eaff', '#ff00c8', '#ffe600', '#00ffb3', '#ff6b00'];
-            return colors[Math.floor(Math.random() * colors.length)];
-        }
+  <section id="services">
+    <div class="container">
+      <h2>Our Services</h2>
+      <p class="lede">We focus on concrete outcomes and maintainable systems. Engagements typically start with a short discovery and lead to a scoped delivery sprint.</p>
+      <div class="grid services" style="margin-top:1.2rem;">
+        <div class="card">
+          <h3>AI Automation</h3>
+          <p>Design intelligent agents and automation workflows. From prototype to production with metrics and guardrails.</p>
+        </div>
+        <div class="card">
+          <h3>Custom Integrations</h3>
+          <p>MCP, UTCP, and bespoke tooling wired to your stack. Email, Jira, Slack, data sources — all in one flow.</p>
+        </div>
+        <div class="card">
+          <h3>Cloud Infrastructure</h3>
+          <p>Kubernetes and cloud architecture for AI workloads: scaling, security, CI/CD and observability included.</p>
+        </div>
+      </div>
+    </div>
+  </section>
 
-        function createParticles() {
-            particles = [];
-            for (let i = 0; i < PARTICLE_COUNT; i++) {
-                particles.push({
-                    x: Math.random() * width,
-                    y: Math.random() * height,
-                    vx: (Math.random() - 0.5) * 1.2,
-                    vy: (Math.random() - 0.5) * 1.2,
-                    r: 2.5 + Math.random() * 2.5,
-                    color: randomColor(),
-                    baseR: 2.5 + Math.random() * 2.5
-                });
-            }
-        }
-        createParticles();
+  <section id="projects">
+    <div class="container">
+      <h2>Projects</h2>
+      <div class="tabs">
+        <button class="tab active" data-target="paige" onclick="switchTab('paige')">Paige Assistant</button>
+        <button class="tab" data-target="nutri" onclick="switchTab('nutri')">NutriTracker</button>
+      </div>
 
-        window.addEventListener('mousemove', e => {
-            mouse.x = e.clientX;
-            mouse.y = e.clientY;
-        });
-        window.addEventListener('scroll', () => {
-            scrollY = window.scrollY;
-        });
+      <div id="paige" class="panel active">
+        <div class="grid" style="margin-top:.6rem;">
+          <div class="card" style="grid-column: span 7;">
+            <h3>Paige Assistant <small>(Coming Soon)</small></h3>
+            <p>Modular desktop assistant for Windows, Linux, and Mac. You decide what runs and how it runs. Extend with roles, personalities, and avatars; connect email; manage Jira; coordinate team tasks; correct spelling; reword or draft text; and more.</p>
+            <ul class="feature-list">
+              <li><span class="tick"></span>Local & cloud models; switch per-task</li>
+              <li><span class="tick"></span>BYO API keys or managed credentials</li>
+              <li><span class="tick"></span>Role system (e.g., Tax Advisor, Tech Lead, Hiring Manager)</li>
+              <li><span class="tick"></span>Plugin-like modular extensions</li>
+              <li><span class="tick"></span>Desktop-first; privacy‑respecting</li>
+            </ul>
+            <div style="margin-top:1rem; display:flex; gap:.8rem;">
+              <a class="btn primary" href="#waitlist">Join waitlist</a>
+              <a class="btn ghost" href="#contact">Partner with us</a>
+            </div>
+          </div>
+          <div class="card" style="grid-column: span 5;">
+            <h3>What it replaces</h3>
+            <p class="lede">Fragmented scripts and ad‑hoc agents. Paige unifies them with a minimal, extensible core.</p>
+            <ul class="feature-list">
+              <li><span class="tick"></span>One place for prompts, tools, and roles</li>
+              <li><span class="tick"></span>Task routing and delegation across team members</li>
+              <li><span class="tick"></span>Lightweight logging & auditability</li>
+            </ul>
+          </div>
+        </div>
+      </div>
 
-        function drawConnection(a, b, dist) {
-            // Colorful gradient connection with glow
-            const grad = ctx.createLinearGradient(a.x, a.y, b.x, b.y);
-            grad.addColorStop(0, a.color);
-            grad.addColorStop(1, b.color);
-            ctx.save();
-            ctx.beginPath();
-            ctx.moveTo(a.x, a.y);
-            ctx.lineTo(b.x, b.y);
-            ctx.strokeStyle = grad;
-            ctx.shadowColor = grad;
-            ctx.shadowBlur = 8;
-            ctx.globalAlpha = 0.25 + 0.5 * (1 - dist/100);
-            ctx.lineWidth = 2.2 - dist/100;
-            ctx.stroke();
-            ctx.globalAlpha = 1.0;
-            ctx.shadowBlur = 0;
-            ctx.restore();
-        }
+      <div id="nutri" class="panel">
+        <div class="grid" style="margin-top:.6rem;">
+          <div class="card" style="grid-column: span 7;">
+            <h3>NutriTracker <small>(Coming Soon)</small></h3>
+            <p>AI webapp for logging nutrition and workouts with near‑zero friction. Track “roughly right” or meticulously: free‑text ("I ate sausages"), precise entries ("300 g, 400 kcal/100 g"), or image upload. Not a medical product.</p>
+            <ul class="feature-list">
+              <li><span class="tick"></span>Estimates calories, macros, micronutrients</li>
+              <li><span class="tick"></span>Workout & health metric tracking</li>
+              <li><span class="tick"></span>Connected nutrition database</li>
+              <li><span class="tick"></span>Recommendations powered by AI
+              </li>
+            </ul>
+            <div style="margin-top:1rem; display:flex; gap:.8rem;">
+              <a class="btn primary" href="#waitlist">Join waitlist</a>
+              <a class="btn ghost" href="#contact">Talk to us</a>
+            </div>
+          </div>
+          <div class="card" style="grid-column: span 5;">
+            <h3>Philosophy</h3>
+            <p class="lede">It’s better to track imperfectly than not at all. The UI encourages consistency, then lets you go deep when it matters.</p>
+            <ul class="feature-list">
+              <li><span class="tick"></span>Quick capture; refine later</li>
+              <li><span class="tick"></span>Explicit non‑medical disclaimer</li>
+              <li><span class="tick"></span>Privacy‑first defaults</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-        function animate() {
-            ctx.clearRect(0, 0, width, height);
-            for (let p of particles) {
-                // Move
-                p.x += p.vx;
-                p.y += p.vy + scrollY * 0.0005;
-                // Bounce
-                if (p.x < 0 || p.x > width) p.vx *= -1;
-                if (p.y < 0 || p.y > height) p.vy *= -1;
-                // No enlargement on mouse proximity
-                // Draw
-                ctx.beginPath();
-                ctx.arc(p.x, p.y, p.r, 0, 2 * Math.PI);
-                ctx.fillStyle = p.color;
-                ctx.globalAlpha = 0.6;
-                ctx.shadowColor = p.color;
-                ctx.shadowBlur = 10;
-                ctx.fill();
-                ctx.globalAlpha = 1.0;
-                ctx.shadowBlur = 0;
-            }
-            // Draw enhanced lines between close particles
-            for (let i = 0; i < particles.length; i++) {
-                for (let j = i + 1; j < particles.length; j++) {
-                    let a = particles[i], b = particles[j];
-                    let dx = a.x - b.x, dy = a.y - b.y;
-                    let dist = Math.sqrt(dx*dx + dy*dy);
-                    if (dist < 100) {
-                        drawConnection(a, b, dist);
-                    }
-                }
-            }
-            requestAnimationFrame(animate);
-        }
-        animate();
+  <section id="about">
+    <div class="container">
+      <h2>About</h2>
+      <p class="lede">Vienna‑based consultancy building pragmatic AI systems. We avoid hype and focus on solutions that deploy cleanly, scale predictably, and are easy to operate.</p>
+      <div class="strip" style="margin-top:1rem;">
+        <span>Services in English & German • Other languages on request</span>
+      </div>
+    </div>
+  </section>
 
-        // Sliding image carousel for panels
-        function startPanelCarousel(panelId, imageCount, basePath, interval=5000) {
-            const panel = document.getElementById(panelId);
-            if (!panel) return;
-            const imgs = Array.from(panel.querySelectorAll('img'));
-            let idx = 0;
-            function showImage(i) {
-                imgs.forEach((img, j) => {
-                    img.classList.remove('active');
-                    img.style.opacity = 0;
-                });
-                idx = i;
-                imgs[idx].classList.add('active');
-                imgs[idx].style.transition = 'opacity 0.7s cubic-bezier(.77,0,.18,1)';
-                imgs[idx].style.opacity = 1;
-            }
-            imgs.forEach((img, j) => {
-                img.style.position = 'absolute';
-                img.style.left = 0;
-                img.style.top = 0;
-                img.style.width = '100%';
-                img.style.height = '100%';
-                img.style.objectFit = 'contain';
-                img.style.opacity = j === 0 ? 1 : 0;
-                img.style.transition = 'opacity 0.7s cubic-bezier(.77,0,.18,1)';
-            });
-            setInterval(() => {
-                let nextIdx = (idx + 1) % imgs.length;
-                showImage(nextIdx);
-            }, interval);
-        }
-        startPanelCarousel('paige-images', 2, 'img/paige/');
-        startPanelCarousel('nutri-images', 1, 'img/nutri/');
-        startPanelCarousel('about-images', 1, 'img/paige/');
-    </script>
+  <section id="contact">
+    <div class="container">
+      <h2>Contact</h2>
+      <p>Email: <a href="mailto:peter@exautomata.ai">peter@exautomata.ai</a></p>
+      <div style="margin-top:1rem; display:flex; gap:.8rem; flex-wrap:wrap;">
+        <a class="btn primary" href="mailto:peter@exautomata.ai">Let's talk</a>
+        <a class="btn ghost" href="#waitlist">Join waitlist</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="waitlist">
+    <div class="container">
+      <h2>Newsletter & Waitlist</h2>
+      <p class="lede">Get updates on Paige and NutriTracker. No spam.</p>
+      <div class="card" style="grid-column: span 12;">
+        <!-- Brevo embed placeholder -->
+        <iframe src="" style="border:none;width:100%;height:220px; background:transparent;" title="Newsletter form"></iframe>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <p><strong>Impressum</strong><br>
+        Peter Pollak e.U. · Eva‑Maria‑Mazzucco‑Platz 2/501, 1220 Wien, Austria · Email: <a href="mailto:peter@exautomata.ai">peter@exautomata.ai</a><br>
+        GISA: 37663797 · UID: ATU81226326 · Supervisory authority: Magistratisches Bezirksamt Wien · Member of Wirtschaftskammer Wien · Applicable regulation: Gewerbeordnung 1994 (GewO)
+      </p>
+      <p><strong>Privacy</strong>: We process personal data solely for communication and newsletter purposes. No tracking cookies are used.</p>
+    </div>
+  </footer>
+
+  <script>
+  // Minimal background: Gradient Flow + Particles (or None)
+  (function(){
+    const canvas = document.getElementById('bgfx');
+    if(!canvas) return;
+    const ctx = canvas.getContext('2d');
+    let raf = null, dpr = 1, W = 0, H = 0, mouse = {x:0,y:0}, scrollFactor = 1, particles = [];
+    const sel = document.getElementById('animSel');
+
+    function resize(){
+      dpr = Math.max(1, window.devicePixelRatio||1);
+      W = canvas.clientWidth; H = canvas.clientHeight;
+      canvas.width = Math.floor(W*dpr); canvas.height = Math.floor(H*dpr);
+      ctx.setTransform(dpr,0,0,dpr,0,0);
+      initParticles();
+    }
+
+    function initParticles(){
+      const count = Math.max(40, Math.floor((W*H)/26000));
+      particles = Array.from({length: count}, ()=>({
+        x: Math.random()*W,
+        y: Math.random()*H,
+        vx: (Math.random()-.5)*0.25,
+        vy: (Math.random()-.5)*0.25,
+        r: 1 + Math.random()*1.6
+      }));
+    }
+
+    function draw(){
+      ctx.clearRect(0,0,W,H);
+      for(const p of particles){
+        const dx = mouse.x - p.x, dy = mouse.y - p.y;
+        const dist = Math.hypot(dx,dy) + 0.001;
+        const influence = Math.max(0, 280 - dist)/280; // 0..1
+        p.vx += (dx/dist)*influence*0.05;
+        p.vy += (dy/dist)*influence*0.05;
+        p.vx *= 0.986; p.vy *= 0.986;
+        p.x += (p.vx + 0.018*scrollFactor);
+        p.y += (p.vy + 0.004*scrollFactor);
+        if(p.x < -10) p.x = W+10; if(p.x > W+10) p.x = -10;
+        if(p.y < -10) p.y = H+10; if(p.y > H+10) p.y = -10;
+        const alpha = 0.05 + (1 - (1 - influence ** 8)) * 0.4; // brightness by influence
+        const radius = p.r * (1 + (1 - (1 - influence ** 4)) * 0.6); // slight size boost near cursor
+        ctx.fillStyle = `rgba(255,255,255,${alpha.toFixed(3)})`;
+        ctx.beginPath(); ctx.arc(p.x, p.y, radius, 0, Math.PI*2); ctx.fill();
+      }
+      raf = requestAnimationFrame(draw);
+    }
+
+    function enable(){
+      document.body.classList.add('anim-gradient');
+      if(raf) cancelAnimationFrame(raf);
+      resize();
+      draw();
+    }
+    function disable(){
+      document.body.classList.remove('anim-gradient');
+      if(raf) cancelAnimationFrame(raf);
+      ctx.clearRect(0,0,W,H);
+    }
+
+    // listeners
+    window.addEventListener('resize', resize);
+    window.addEventListener('mousemove', e=>{ const r = canvas.getBoundingClientRect(); mouse.x = e.clientX - r.left; mouse.y = e.clientY - r.top; });
+    window.addEventListener('scroll', ()=>{ scrollFactor = 1 + Math.min(1.2, window.scrollY/1000); });
+
+    // default on
+    enable();
+    if(sel){ sel.addEventListener('change', e=> (e.target.value==='None'? disable(): enable())); }
+  })();
+  </script>
 </body>
 </html>
