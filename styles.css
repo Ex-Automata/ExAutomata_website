@@ -124,3 +124,52 @@ footer a { color: var(--text); }
   .card { grid-column: span 12; }
   .services .card { grid-column: span 12; }
 }
+
+/* Mobile / notch and nav wrapping fixes */
+.nav {
+  /* ensure top content isn't hidden behind device notches/status bars */
+  padding-top: constant(safe-area-inset-top); /* iOS <12 fallback */
+  padding-top: env(safe-area-inset-top);
+  /* safe-area left/right so content doesn't touch rounded screen edges or get clipped */
+  padding-left: constant(safe-area-inset-left);
+  padding-left: env(safe-area-inset-left);
+  padding-right: constant(safe-area-inset-right);
+  padding-right: env(safe-area-inset-right);
+}
+
+@media (max-width: 820px) {
+  .nav-inner {
+    /* allow brand and links to wrap so the right-side controls don't get clipped */
+    flex-wrap: wrap;
+    gap: .5rem;
+  align-items: center;
+  /* allow the container to grow vertically when items wrap */
+  height: auto; /* override fixed desktop height */
+  padding: .6rem 0 .45rem 0;
+  }
+  /* allow brand to shrink if needed (prevents overflow) */
+  .brand { flex: 0 1 auto; min-width: 0; }
+  .nav-links {
+    /* move links to their own row and align them to the right; allow wrapping inside the links container */
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    gap: .6rem;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .nav-links a { white-space: nowrap; }
+  /* ensure the theme selector and controls stay visible and can move to their own row */
+  .theme-switch { order: 2; }
+}
+
+/* Ensure project/about cards always stack on small screens even when inline styles set grid-column */
+@media (max-width: 920px) {
+  /* Force any card inside a grid to span full width on narrow screens.
+     This overrides inline `grid-column: span X;` styles used in the HTML so
+     Projects, About, Services, etc. stack cleanly on mobile. */
+  .panel .grid .card,
+  .grid .card {
+    grid-column: 1 / -1 !important;
+  }
+}
