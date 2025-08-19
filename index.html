@@ -1,48 +1,232 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Under Construction</title>
-    <style>
-        body {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            margin: 0;
-            background: #f4f4f4;
-            font-family: Arial, sans-serif;
-        }
-        .gear {
-            width: 100px;
-            height: 100px;
-            margin-bottom: 30px;
-            animation: spin 2s linear infinite;
-        }
-        @keyframes spin {
-            100% { transform: rotate(360deg); }
-        }
-        .text {
-            font-size: 2rem;
-            color: #333;
-            letter-spacing: 2px;
-        }
-        @keyframes hammer-hit {
-            0% { transform: rotate(60deg) translateY(-70px); }
-            10% { transform: rotate(60deg) translateY(-70px); }
-            20% { transform: rotate(-30deg) translateY(0); }
-            30% { transform: rotate(60deg) translateY(-70px); }
-            100% { transform: rotate(60deg) translateY(-70px); }
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="color-scheme" content="dark light">
+  <title>Peter Pollak e.U. – AI Automation & Consulting</title>
+  <script src="https://artifact.exautomata.ai/style/themeManager.bundle.js"></script>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div style="position: relative; width: 120px; height: 120px; margin-bottom: 30px;">
-        <span style="position: absolute; left: 10px; top: 30px; font-size: 96px; z-index: 1; animation: spin 2s linear infinite;">⚙️</span>
-        <span id="hammer-emoji" style="position: absolute; left: 50px; bottom: 100; font-size: 96px; z-index: 2; transform: rotate(-30deg); animation: hammer-hit 1.2s infinite;">🔨</span>
+  <canvas id="bgfx"></canvas>
+
+  <div class="nav">
+    <div class="container nav-inner">
+      <div class="brand"><span class="logo"></span><span>Peter Pollak e.U.</span></div>
+      <div class="nav-links">
+        <a href="#services">Services</a>
+        <a href="#projects">Projects</a>
+        <a href="#contact">Contact</a>
+        <div class="theme-switch">
+          Theme:
+          <select id="palette-select"></select>
+        </div>
+      </div>
     </div>
-    <div class="text">Under Construction</div>
+  </div>
+
+  <header class="hero">
+    <div class="container hero-grid">
+      <div>
+        <span class="badge">AI • Apps • Automation • Infrastructure</span>
+        <h1>We build the AI foundation for your next leap forward.</h1>
+        <p>We teach machines to handle the tedious, orchestrate the complex, and assist the mundane — let AI handle it, so you can focus on what really matters.</p>
+        <p>Workshops, Advisory and delivery for apps, agent workflows, RAG, MCP/UTCP integrations, local & cloud infrastructure and more.</p>
+        <div class="strip" style="margin-top:1rem;">
+          <span>English & German. Vienna-based, remote-friendly.</span>
+        </div>
+        <div style="display:flex; gap:.8rem; margin-top:1rem; flex-wrap:wrap;">
+          <a class="btn primary" href="#contact">Let's talk</a>
+          <a class="btn ghost" href="#projects">See projects</a>
+        </div>
+      </div>
+        <div>
+        <div class="blob" aria-hidden="true">
+          <img src="img/robot_safety-first.png" alt="Robot illustration" aria-hidden="true" />
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <section id="services">
+    <div class="container">
+      <h2>Our Services</h2>
+      <p class="lede">We focus on concrete outcomes and maintainable systems. Engagements typically start with a short discovery and lead to a scoped delivery sprint.</p>
+      <div class="grid services" style="margin-top:1.2rem;">
+        <div class="card">
+          <h3>AI Automation</h3>
+          <p>From apps to integration. We design intelligent agents and automation workflows. From prototype to production with metrics and guardrails. Full automation or human in the loop.</p>
+        </div>
+        <div class="card">
+          <h3>Custom Integrations</h3>
+          <p>RAG, MCP, UTCP, and bespoke tooling wired to your stack. Email, Jira, Slack, data sources — all in one flow.</p>
+        </div>
+        <div class="card">
+          <h3>Cloud Infrastructure</h3>
+          <p>Kubernetes and cloud architecture for AI and general workloads: workload orchestration, autoscaling, security, CI/CD and observability included. Host your own models, bring your own keys to cloud models, or let us manage the platform for you.</p>
+        </div>
+      </div>
+      <div class="strip" style="margin-top:1rem;">
+        <span>Full Stack AI • Local & cloud • Privacy First • SaaS • Production & Integration ready</span>
+      </div>
+    </div>
+  </section>
+
+  <section id="projects">
+    <div class="container">
+      <h2>Projects</h2>
+      <div class="tabs">
+        <button class="tab active" data-target="paige" onclick="switchTab('paige')">Paige Assistant</button>
+        <button class="tab" data-target="nutri" onclick="switchTab('nutri')">NutriTracker</button>
+      </div>
+
+      <div id="paige" class="panel active">
+        <div class="grid" style="margin-top:.6rem;">
+          <div class="card" style="grid-column: span 7;">
+            <h3>Paige Assistant <small>(Coming Soon)</small></h3>
+            <p>How much time per week do you waste on emails, documentation, reports, or copying data between tables? Paige changes that. A modular, privacy‑first desktop assistant (Windows, Linux, Mac) that proactively handles routine and complex tasks.</br> Enable only the modules you want, pick local, open‑source or cloud models per task, and choose a personality, voice, or avatar. Paige can integrate with emails, calendars, ticket and your data sources to automate workflows while you stay in control.</p>
+            <ul class="feature-list">
+              <li><span class="tick"></span>Desktop‑first & privacy‑respecting</li>
+              <li><span class="tick"></span>Local, open‑source and cloud AI options, managed and BYO API Keys</li>
+              <li><span class="tick"></span>Modular extensions with per‑task model choice</li>
+              <li><span class="tick"></span>Proactive suggestions</li>
+              <li><span class="tick"></span>Task routing and delegation across team members</li>
+              <li><span class="tick"></span>Customizable personalities, voices, and avatars.</li>
+              <li><span class="tick"></span>Role system - Tax advisor, Project Manager, Tech Lead, you decide!</li>
+            </ul>
+              <div style="margin-top:1rem; display:flex; gap:.8rem;">
+                <a class="btn primary" href="#contact">Contact</a>
+                <a class="btn ghost" href="#contact">Talk to us</a>
+              </div>
+          </div>
+          <div class="card" style="grid-column: span 5;">
+            <h3>Philosophy</h3>
+            <p class="lede">Paige is built for practical productivity: a single, extensible tool that adapts to people and organizations while keeping privacy first.</p>
+            <ul class="feature-list">
+              <li><span class="tick"></span>Reduce routine work — focus on what's imporant.</li>
+              <li><span class="tick"></span>Proactive - chimes up when there're things to do.</li>
+              <li><span class="tick"></span>One system instead of many subscriptions.</li>
+              <li><span class="tick"></span>Modular, flexible, and configurable — useful for solo users and large teams alike</li>
+              <li><span class="tick"></span>Privacy‑first by design — local and hosted options, transparent controls</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div id="nutri" class="panel">
+        <div class="grid" style="margin-top:.6rem;">
+          <div class="card" style="grid-column: span 7;">
+            <h3>NutriTracker <small>(Early Alpha/Coming Soon)</small></h3>
+            <p>AI webapp for logging nutrition and workouts with near‑zero friction. Track “roughly right” or meticulously: free‑text ("I ate sausages"), precise entries ("300 g, 400 kcal/100 g"), or image upload. Not a medical product.</p>
+            <ul class="feature-list">
+              <li><span class="tick"></span>Estimates calories, macros, micronutrients</li>
+              <li><span class="tick"></span>Workout & health metric tracking</li>
+              <li><span class="tick"></span>Connected nutrition database</li>
+              <li><span class="tick"></span>Recommendations powered by AI</li>
+            </ul>
+            <div style="margin-top:1rem; display:flex; gap:.8rem;">
+                <a class="btn primary" href="https://nutritracker.exautomata.ai/login.html" target="_blank" rel="noopener noreferrer">Try it!</a>
+                <a class="btn ghost" href="https://github.com/Ex-Automata/NutriTracker_Frontend/issues" target="_blank" rel="noopener noreferrer" aria-label="Open NutriTracker feedback on GitHub">Give feedback</a>
+              <a class="btn ghost" href="#contact">Talk to us</a>
+            </div>
+          </div>
+          <div class="card" style="grid-column: span 5;">
+            <h3>Philosophy</h3>
+            <p class="lede">It’s better to track imperfectly than not at all. The AI fills in what you can't, but allows you to modify data as needed.</p>
+            <ul class="feature-list">
+              <li><span class="tick"></span>Quick capture - Near zero friction</li>
+              <li><span class="tick"></span>Refine if you know better</li>
+              <li><span class="tick"></span>AI suggestions</li>
+              <li><span class="tick"></span>Privacy‑first defaults</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section id="about">
+    <div class="container">
+      <h2>About</h2>
+      <p class="lede">
+        I help teams turn ideas into working systems — from research prototypes to shipped apps.
+      </p>
+
+      <div class="grid" style="margin-top:1rem;">
+        <div class="card" style="grid-column: span 7;">
+          <h3>Who</h3>
+          <p>
+            Hi, I’m Peter Pollak. My past work spans app development, frontend and backend engineering, infrastructure, system integrations, and applied AI — with projects in fields such as medical technology, mobility, and natural language processing research.</br>I’ve contributed to research projects, built prototypes, and brought ideas all the way to shipped applications used by hundreds of thousands of people. My focus is on bridging the gap between exploration and execution: taking complex ideas and turning them into practical solutions.
+          </p>
+        </div>
+
+        <div class="card" style="grid-column: span 5;">
+          <h3>Tech Stack</h3>
+          <ul class="feature-list">
+            <ul class="feature-list">
+              <li><span class="tick"></span>Python, JavaScript, Others</li>
+              <li><span class="tick"></span>AI, GenAI & NLP (TensorFlow, PyTorch, LLMs, RAG, MCP)</li>
+              <li><span class="tick"></span>Cloud & Infrastructure (Kubernetes, Docker, CI/CD)</li>
+              <li><span class="tick"></span>APIs & Integrations (REST, microservices)</li>
+              <li><span class="tick"></span>Frontend & Apps (React, Android)</li>
+            </ul>
+          </ul>
+          <!--ul class="feature-list">
+          <li><span class="tick"></span>Discover → scope the smallest valuable outcome</li>
+          <li><span class="tick"></span>Design → clear interfaces, guardrails, metrics</li>
+          <li><span class="tick"></span>Deliver → production-ready, docs & handover included</li>
+          <li><span class="tick"></span>Operate → privacy-first, measurable, maintainable</li>
+          </ul-->
+        </div>
+      </div>
+      <div class="strip" style="margin-top:.6rem;">
+        <span>English & German • Remote-friendly • Vienna-based</span>
+      </div>
+      <div style="margin-top:1rem; display:flex; gap:.8rem; flex-wrap:wrap;">
+        <a class="btn primary" href="#contact">Work with us</a>
+        <a class="btn ghost" href="docs/Developer Resume 2025.pdf" download="Developer_Resume_2025.pdf" aria-label="Download Info">Download Info</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="container">
+      <h2>Contact</h2>
+      <p>Email: <a href="mailto:peter@exautomata.ai">peter@exautomata.ai</a></p>
+      <div style="margin-top:1rem; display:flex; gap:.8rem; flex-wrap:wrap;">
+        <a class="btn primary" href="mailto:peter@exautomata.ai">Let's talk</a>
+        <a class="btn ghost" href="#contact">Contact</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Newsletter & waitlist removed -->
+
+  <footer>
+    <div class="container">
+      <section id="privacy-bullets">
+        <strong>Privacy</strong>:
+        <ul class="privacy-list">
+          <li>We respect your privacy. No tracking cookies are used.</li>
+          <li>We only share data with third parties when necessary to provide the services you request.</li>
+          <li>We may collect GDPR-compliant, aggregated, non-identifying usage data to guide data-driven improvements.</li>
+          <li>All data is processed in-house.</li>
+          <li>We process personal data (your email) solely for communication purposes.</li>
+        </ul>
+      </section>
+
+      <p><strong>Impressum</strong><br>
+        Peter Pollak e.U. · Eva‑Maria‑Mazzucco‑Platz 2/501, 1220 Wien, Austria · Email: <a href="mailto:peter@exautomata.ai">peter@exautomata.ai</a><br>
+        GISA: 37663797 · UID: ATU81226326 · Supervisory authority: Magistratisches Bezirksamt Wien · Member of Wirtschaftskammer Wien · Applicable regulation: Gewerbeordnung 1994 (GewO)
+      </p>
+    </div>
+  </footer>
+
+  <script src="switchTab.js"></script>
+  <script src="themeSelector.js"></script>
+  <script src="bgfx.js"></script>
+  <script src="privacyBullets.js"></script>
 </body>
 </html>
