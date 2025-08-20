@@ -1,4 +1,3 @@
-// Animate privacy bullets on scroll (with stagger)
 (function(){
   document.addEventListener("DOMContentLoaded", () => {
     const items = document.querySelectorAll(".privacy-list li");

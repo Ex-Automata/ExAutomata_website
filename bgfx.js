@@ -30,14 +30,23 @@
       const dx = mouse.x - p.x, dy = mouse.y - p.y;
       const dist = Math.hypot(dx,dy) + 0.001;
       const influence = Math.max(0, 280 - dist)/280; // 0..1
-      p.vx += (dx/dist)*influence*0.05;
-      p.vy += (dy/dist)*influence*0.05;
+      if(dist < 20) {
+        //Accelerate close particles and don't pull them back while close.
+        if (Math.sign(dx) !== 0 && Math.sign(dx) === Math.sign(p.vx)) {
+          p.vx += (dx/dist) * influence * 0.25;
+        }
+        if (Math.sign(dy) !== 0 && Math.sign(dy) === Math.sign(p.vy)) {
+          p.vy += (dy/dist) * influence * 0.25;
+        }
+      } else{
+        p.vx += (dx/dist) * influence * 0.05;
+        p.vy += (dy/dist) * influence * 0.05;
+      }
       p.vx *= 0.986; p.vy *= 0.986;
       p.x += (p.vx + 0.018*scrollFactor);
       p.y += (p.vy + 0.004*scrollFactor);
       if(p.x < -10) p.x = W+10; if(p.x > W+10) p.x = -10;
       if(p.y < -10) p.y = H+10; if(p.y > H+10) p.y = -10;
-      // keep per-particle computed values for later rendering
       p._influence = influence;
       p._distToMouse = dist;
     }
